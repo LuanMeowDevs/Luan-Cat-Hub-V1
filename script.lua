@@ -3703,96 +3703,17 @@ spawn(function()
     end
   end
 end)
-local ValentineGacha = Tabs.Valentine:AddToggle("ValentineGacha", {Title = "Auto Random Valentine Gacha Dealer", Description = "", Default = false})
-ValentineGacha:OnChanged(function(Value)
+AutoValentineGacha = Tabs.Valentine:AddToggle("AutoValentineGacha", {Title = "Auto Random Valentine Gacha Dealer", Description = "", Default = false})
+AutoValentineGacha:OnChanged(function(Value)
     _G.AutoValentineGacha = Value
 end)
-
-function getSea()
-    local suc, res = pcall(function()
-        local player = game.Players.LocalPlayer
-        if player.PlayerGui:FindFirstChild("Main") and player.PlayerGui.Main:FindFirstChild("Sea") then
-            local text = player.PlayerGui.Main.Sea.Text
-            if text:find("First") or text:find("1") then return 1 end
-            if text:find("Second") or text:find("2") then return 2 end
-            if text:find("Third") or text:find("3") then return 3 end
-        end
-        local pos = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
-        if pos then
-            local y = pos.Position.Y
-            if y > 0 and y < 200 then return 1 end
-            if y < -500 then return 2 end
-            if y > 3000 then return 3 end
-        end
-        return 1
-    end)
-    return suc and res or 1
-end
-
-function findNPC(nome)
-    for _, v in pairs(workspace:GetDescendants()) do
-        if v:IsA("Model") and v.Name == nome and v:FindFirstChild("Humanoid") then
-            return v
-        end
-    end
-    return nil
-end
-
-function moveToNPC(npc)
-    local hrp = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-    if hrp and npc and npc:FindFirstChild("HumanoidRootPart") then
-        hrp.CFrame = npc.HumanoidRootPart.CFrame * CFrame.new(0, 0, 5)
-    end
-end
-
-function interact(npc, acao)
-    local args = { [1] = npc, [2] = acao }
-    local rep = game:GetService("ReplicatedStorage"):FindFirstChild("Interact")
-    if rep then
-        rep:FireServer(unpack(args))
-    end
-end
-
-function getHearts()
-    for _, gui in pairs(game.Players.LocalPlayer.PlayerGui:GetChildren()) do
-        if gui.Name == "ValentineGUI" or gui:FindFirstChild("Hearts") then
-            local hearts = gui:FindFirstChild("Hearts")
-            if hearts then
-                return tonumber(hearts.Text) or 0
+spawn(function()
+    while wait(0.5) do
+        pcall(function()
+            if _G.AutoValentineGacha then
+                replicated.Remotes.CommF_:InvokeServer("ValentineGacha","Roll")
             end
-        end
-    end
-    return 0
-end
-
-task.spawn(function()
-    while task.wait(0.2) do
-        if _G.AutoValentineGacha then
-            pcall(function()
-                local dealer = findNPC("ValentinesGachaDealer")
-                if dealer then
-                    if getHearts() >= 250 then
-                        moveToNPC(dealer)
-                        task.wait(1)
-                        interact(dealer, "Roll")
-                        task.wait(0.5)
-                    end
-                else
-                    local sea = getSea()
-                    local hrp = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-                    if hrp then
-                        if sea == 1 then
-                            hrp.CFrame = CFrame.new(2764, 432, -7144)
-                        elseif sea == 2 then
-                            hrp.CFrame = CFrame.new(-1200, 25, -1700)
-                        elseif sea == 3 then
-                            hrp.CFrame = CFrame.new(2000, 50, 1000)
-                        end
-                        task.wait(2)
-                    end
-                end
-            end)
-        end
+        end)
     end
 end)
 local AutoFlamingo = Tabs.Valentine:AddToggle("AutoFlamingo", {Title = "Auto Flamingo Delivery", Description = "", Default = false})
