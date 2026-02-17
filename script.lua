@@ -695,7 +695,7 @@ QuestNeta = function()
 end
 
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-local Window = Fluent:CreateWindow({Title = "🏹Eclipse Hub❤️",SubTitle = "| Valentine´s Day Edition",TabWidth = 180,Size = UDim2.fromOffset(660, 440),Acrylic = false,Theme = "Rose",MinimizeKey = Enum.KeyCode.End})
+local Window = Fluent:CreateWindow({Title = "🌑Eclipse Hub🌑",SubTitle = "| By:Araujo",TabWidth = 180,Size = UDim2.fromOffset(660, 440),Acrylic = false,Theme = "Rose",MinimizeKey = Enum.KeyCode.End})
 	
 -- Services
 local CoreGui = game:GetService("CoreGui")
@@ -714,7 +714,7 @@ ToggleButton.Size = UDim2.new(0, 50, 0, 50)
 ToggleButton.Position = UDim2.new(0.15, 0, 0.15, 0)
 ToggleButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 ToggleButton.BorderSizePixel = 0
-ToggleButton.Image = "rbxassetid://130364232574601" -- sua imagem
+ToggleButton.Image = "rbxassetid://112518061635682" -- sua imagem
 ToggleButton.Parent = ScreenGui
 
 -- UICorner para bordas arredondadas
@@ -773,7 +773,6 @@ local Tabs = {
   Main = Window:AddTab({Title = "🚀Farm", Icon = ""}),
   Melee = Window:AddTab({Title = "🥊Fighting Style", Icon = ""}),
   Quests = Window:AddTab({Title = "💎Items Farm", Icon = ""}),
-  Valentine = Window:AddTab({Title = "❤️Valentine", Icon = ""}),
   SeaEvent = Window:AddTab({Title = "🌊Sea Events", Icon = ""}),
   Mirage = Window:AddTab({Title = "🌴Mirage + RaceV4", Icon = ""}),
   Drago = Window:AddTab({Title = "🐉Drago Dojo", Icon = ""}),
@@ -3703,50 +3702,6 @@ spawn(function()
     end
   end
 end)
-do
-    local toggle = Tabs.Valentine:AddToggle("AutoGacha", {Title = "Auto Valentine Gacha", Description = "", Default = false})
-    toggle:OnChanged(function(v) _G.AutoGacha = v end)
-    
-    task.spawn(function()
-        while task.wait(0.5) do
-            if _G.AutoGacha then
-                pcall(function()
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ValentineGacha", "Roll")
-                end)
-            end
-        end
-    end)
-end
-do
-    local toggle = Tabs.Valentine:AddToggle("AutoDelivery", {Title = "Auto Valentine Delivery", Description = "", Default = false})
-    toggle:OnChanged(function(v) _G.AutoDelivery = v end)
-    
-    task.spawn(function()
-        while task.wait(0.5) do
-            if _G.AutoDelivery then
-                pcall(function()
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ValentineDelivery", "Start")
-                end)
-            end
-        end
-    end)
-end
-do
-    local toggle = Tabs.Valentine:AddToggle("AutoCupid", {Title = "Auto Cupid Missions", Description = "", Default = false})
-    toggle:OnChanged(function(v) _G.AutoCupid = v end)
-    
-    task.spawn(function()
-        while task.wait(0.5) do
-            if _G.AutoCupid then
-                pcall(function()
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Cupid", "Accept")
-                    task.wait(1)
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Cupid", "TurnIn")
-                end)
-            end
-        end
-    end)
-end
 
 Tabs.Mirage:AddSection("Mystic Island / Full Moon")
 FullMOOn = Tabs.Mirage:AddParagraph({Title = " FullMoon Status ",Content = ""})
