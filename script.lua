@@ -695,7 +695,7 @@ QuestNeta = function()
 end
 
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-local Window = Fluent:CreateWindow({Title = "🌑Eclipse Hub🌑",SubTitle = "| By:Araujo",TabWidth = 180,Size = UDim2.fromOffset(660, 440),Acrylic = false,Theme = "Rose",MinimizeKey = Enum.KeyCode.End})
+local Window = Fluent:CreateWindow({Title = "❤️Eclipse Hub❤️",SubTitle = "| By:Luan Valentines Day Edition",TabWidth = 180,Size = UDim2.fromOffset(660, 440),Acrylic = false,Theme = "Rose",MinimizeKey = Enum.KeyCode.End})
 	
 -- Services
 local CoreGui = game:GetService("CoreGui")
@@ -714,7 +714,7 @@ ToggleButton.Size = UDim2.new(0, 50, 0, 50)
 ToggleButton.Position = UDim2.new(0.15, 0, 0.15, 0)
 ToggleButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 ToggleButton.BorderSizePixel = 0
-ToggleButton.Image = "rbxassetid://112518061635682" -- sua imagem
+ToggleButton.Image = "rbxassetid://130364232574601" -- sua imagem
 ToggleButton.Parent = ScreenGui
 
 -- UICorner para bordas arredondadas
@@ -773,6 +773,7 @@ local Tabs = {
   Main = Window:AddTab({Title = "🚀Farm", Icon = ""}),
   Melee = Window:AddTab({Title = "🥊Fighting Style", Icon = ""}),
   Quests = Window:AddTab({Title = "💎Items Farm", Icon = ""}),
+  Valentine = Window:AddTab({Title = "❤️Valentine", Icon = ""}),
   SeaEvent = Window:AddTab({Title = "🌊Sea Events", Icon = ""}),
   Mirage = Window:AddTab({Title = "🌴Mirage + RaceV4", Icon = ""}),
   Drago = Window:AddTab({Title = "🐉Drago Dojo", Icon = ""}),
@@ -3701,6 +3702,40 @@ spawn(function()
       end)
     end
   end
+end)
+local AutoValentineGacha = Tabs.Valentine:AddToggle("AutoValentineGacha", {Title = "Auto Valentine Gacha", Description = "", Default = false})
+AutoValentineGacha:OnChanged(function(Value)
+    _G.AutoValentineGacha = Value
+end)
+
+spawn(function()
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local Remotes = ReplicatedStorage:WaitForChild("Remotes")
+    local CommF = Remotes:WaitForChild("CommF_")
+
+    local function fireActivity()
+        local reportRemote = ReplicatedStorage:FindFirstChild("ReportActivity", true)
+        if reportRemote and reportRemote:IsA("RemoteEvent") then
+            pcall(function()
+                reportRemote:FireServer("GachaWindow")
+            end)
+        end
+    end
+
+    while wait(0.2) do
+        if _G.AutoValentineGacha then
+            pcall(function()
+                CommF:InvokeServer("Cousin")
+                wait(0.1)
+                fireActivity()
+                wait(0.1)
+                CommF:InvokeServer("Cousin", "CheckCanBuyType", "ValentinesGacha26")
+                wait(0.1)
+                CommF:InvokeServer("Cousin", "ValentinesGacha26")
+                wait(2.5)
+            end)
+        end
+    end
 end)
 
 Tabs.Mirage:AddSection("Mystic Island / Full Moon")
